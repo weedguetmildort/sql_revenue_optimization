@@ -1,1 +1,11 @@
-# covid_19_pandemic_data_analysis
+# SQL Revenue Optimization
+
+Problem
+
+Key Performance Indicators (KPIs)
+
+Architecture diagram
+
+How to run
+
+Screenshots
