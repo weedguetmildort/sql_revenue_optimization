@@ -1,6 +1,8 @@
 # 📊 **E-Commerce Revenue, Marketing & Business Intelligence Pipeline**
 ### *End-to-End SQL ETL, Data Warehousing & Power BI Analytics Project*
 
+![Dashboard Screenshot](./demo/screenshots/Overview.png)
+
 This project implements a complete, production-style Business Intelligence ecosystem. It demonstrates the full lifecycle of a modern analytics workflow:
 
 **Raw Data → ETL → Staging → Dimensional Modeling → Fact Tables → Aggregations → Data Quality Checks → Power BI Dashboards**
