@@ -1,0 +1,22 @@
+# Core data stack
+pandas==2.2.3
+numpy==1.26.4
+
+# Database connectivity
+psycopg2-binary==2.9.9    # Postgres driver
+SQLAlchemy==2.0.36        # ORM/engine (optional but nice for flexible queries)
+
+# Data validation & quality (optional)
+# great-expectations==1.2.1
+
+# Scheduling / orchestration (optional)
+# dagger-io==0.10.0         # If you use Dagger to define your pipeline
+# or
+# prefect==3.0.2          # Alternative lightweight orchestrator
+
+# Environment management
+python-dotenv==1.0.1
+
+# (optional) CSV file utilities, progress bars, etc.
+tqdm==4.67.1
+pyyaml==6.0.2
