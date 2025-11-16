@@ -1,389 +1,287 @@
-📊 E-Commerce Revenue, Marketing & Business Intelligence Pipeline
-End-to-End SQL ETL, Data Warehousing & Power BI Analytics Project
+# 📊 **E-Commerce Revenue, Marketing & Business Intelligence Pipeline**
+### *End-to-End SQL ETL, Data Warehousing & Power BI Analytics Project*
 
-This project is a complete, production-style Business Intelligence pipeline built to demonstrate real-world data engineering, analytics, and reporting skills. It reproduces the full lifecycle of a BI system:
+This project implements a complete, production-style Business Intelligence ecosystem. It demonstrates the full lifecycle of a modern analytics workflow:
 
-Data Ingestion → Cleaning & Transformation → Dimensional Modeling → Aggregations → Quality Checks → Marketing Enrichment → Business Dashboards
+**Raw Data → ETL → Staging → Dimensional Modeling → Fact Tables → Aggregations → Data Quality Checks → Power BI Dashboards**
 
-The system ingests e-commerce transaction data and marketing ad spend, builds a star-schema warehouse using PostgreSQL, and visualizes insights using Power BI. Everything runs inside Docker for reproducibility.
+The system ingests e-commerce transaction data and synthetic ad-spend data, builds a robust warehouse using PostgreSQL, and surfaces insights through Power BI dashboards. Everything is containerized with Docker for ease of deployment and reproducibility.
 
-🚀 Project Highlights
-✔ Fully Automated ETL Pipeline
+---
 
-Python ingestion (load_raw.py)
+## 🚀 **Project Highlights**
 
-SQL-based staging, cleansing, and transformations
+### ✔ Fully Automated ETL Pipeline
+- Python-based ingestion of raw CSV files  
+- SQL-based transformations for cleaning and standardization  
+- Dimension & Fact modeling following the Kimball approach  
+- Daily aggregated metrics for efficient BI reporting  
+- Marketing ad spend integration for ROAS analysis  
+- Cohort modeling and retention calculations  
+- Automated data quality checks  
 
-Automatic dimensional modeling (dim_date, dim_customer, dim_product)
+### ✔ Modern Data Architecture
+- **Raw → Staging → Warehouse → Data Marts**  
+- Clear separation of concerns  
+- Star schema optimized for Power BI  
+- Incremental-load ready (partition-friendly design)  
 
-Fact table generation (orders, order_items)
+### ✔ Strong Business Impact
+This project answers real company questions:
 
-Daily revenue aggregation table for reporting (agg_daily_revenue)
+- Which marketing channels produce the best ROAS?  
+- How does daily ad spend correlate with revenue?  
+- Which products drive the most sales?  
+- How do countries differ in purchase behavior?  
+- How do customer cohorts perform after acquisition?  
+- Are there data quality issues affecting decisions?  
 
-Marketing ad spend enrichment (ad_spend)
+---
 
-Cohort analysis output
+## 🛠 **Tech Stack**
 
-Data quality checks built directly in SQL
+**Languages:**  
+- Python  
+- SQL (PostgreSQL)
 
-✔ Modern Data Architecture Patterns
+**Tools & Frameworks:**  
+- Docker  
+- PostgreSQL 17  
+- Power BI Desktop  
+- Pandas, psycopg2  
+- DAX  
 
-Raw → Staging → Warehouse (DIM/FACT) → Marts
+**Modeling:**  
+- Star schema  
+- Fact/Dimension modeling  
+- Cohorts & retention analysis  
 
-Star schema optimized for BI tools
+---
 
-Daily aggregates for cost-efficient analytics
+## 📂 **Repository Structure**
 
-Incremental-load–friendly structure (partition-ready)
-
-✔ Robust SQL Skills
-
-Window functions
-
-CTE pipelines
-
-Surrogate key generation
-
-Deduplication
-
-Date normalization & time intelligence
-
-Data quality detection logic
-
-Cohort modeling
-
-✔ Business Value
-
-This project answers real BI questions:
-
-Which marketing channels drive the highest ROAS?
-
-How does ad spend relate to daily revenue?
-
-Which products and countries contribute most to sales?
-
-How are new vs returning customers trending?
-
-What does customer retention look like?
-
-Are there data quality issues affecting reporting accuracy?
-
-🛠 Tech Stack
-Languages
-
-Python
-
-SQL (PostgreSQL dialect)
-
-Tools
-
-Docker (multi-container environment)
-
-PostgreSQL 17
-
-Power BI Desktop
-
-Pandas / psycopg2
-
-DAX
-
-Data Modeling
-
-Kimball-style dimensional modeling
-
-Star schemas, fact & dimension tables
-
-Aggregates + cohorts
-
-📁 Repository Structure
+```
 .
 ├── data/
 │   ├── raw_sales_data.csv
 │   ├── ad_spend.csv
 │
 ├── pipeline/
-│   ├── load_raw.py                 # Load raw CSVs into Postgres
-│   ├── backfill.py (optional)
-│   ├── monitor.py  (optional)
+│   ├── load_raw.py
+│   ├── backfill.py        # optional
+│   ├── monitor.py         # optional (pipeline health)
 │
 ├── sql/
-│   ├── staging_cleaning.sql        # Staging transforms & cleaning
-│   ├── dims_facts.sql              # Dimension + fact models
-│   ├── aggregates_daily.sql        # Daily revenue aggregates
-│   ├── cohorts.sql                 # Cohort creation
-│   ├── quality_checks.sql          # Data validation tests
+│   ├── staging_cleaning.sql
+│   ├── dims_facts.sql
+│   ├── aggregates_daily.sql
+│   ├── cohorts.sql
+│   ├── quality_checks.sql
 │
 ├── docker/
-│   ├── Dockerfile.etl              # Python ETL image
+│   ├── Dockerfile.etl
 │   ├── Dockerfile.db (optional)
 │
 ├── docker-compose.yml
 │
 └── powerbi/
     ├── Ecommerce Revenue & Marketing Performance.pbix
-    └── (Exported screenshots)
+    └── screenshots/
+```
 
-🏗 How the Pipeline Works
-1️⃣ Raw Layer (Landing Zone)
+---
 
-Python loads CSV files into Postgres:
+## 🏗 **Pipeline Architecture Overview**
 
-raw_sales – e-commerce transactions
+### 1️⃣ **Raw Layer**
+Python loads raw CSVs into Postgres:
 
-raw_ad_spend – daily marketing spend by channel
+- `raw_sales` – transaction-level e-commerce data  
+- `raw_ad_spend` – daily spend by marketing channel  
 
-Each raw table mirrors the structure of the input source with minimal changes.
+This mirrors source systems with no transformations.
 
-2️⃣ Staging Layer (Data Standardization)
+---
 
-staging_cleaning.sql cleans and normalizes both datasets:
+### 2️⃣ **Staging Layer**  
+`staging_cleaning.sql` performs:
 
-Sales:
+#### **Sales Cleaning**
+- Encode/UTF-8 cleanup  
+- Date normalization  
+- Removal of cancelled invoices  
+- Quantity/price validation  
+- Deduplication  
+- Country normalization  
 
-Fix encoding issues
+#### **Ad Spend Cleaning**
+- Channel normalization  
+- Removal of out-of-range dates  
+- Deduplication  
+- Currency & numeric enforcement  
 
-Clean descriptions / remove Nulls
+Outputs clean, standardized stage tables.
 
-Convert text timestamps to real timestamps
+---
 
-Remove negative/zero quantities
+### 3️⃣ **Warehouse Modeling (Dimensions & Facts)**  
+`dims_facts.sql` builds the star schema:
 
-Remove cancelled/refunded invoices
+#### **Dimensions**
+- `dim_date`  
+- `dim_customer`  
+- `dim_product`  
 
-Map inconsistent country names
+#### **Facts**
+- `fct_orders`  
+- `fct_order_items`  
 
-Deduplicate rows
+Surrogate keys generated via sequences.
 
-Ad Spend:
+---
 
-Normalize channels
+### 4️⃣ **Daily Metrics (Data Mart)**  
+`aggregates_daily.sql` builds:
 
-Validate date ranges
+#### `mart.agg_daily_revenue`
+- Revenue  
+- Orders  
+- AOV  
+- Active customers  
+- New vs returning customers  
+- Country-level rollups  
+- Power BI-ready date keys  
 
-Deduplicate
+---
 
-Convert strings → numeric
+### 5️⃣ **Cohort Modeling**  
+`cohorts.sql` creates:
 
-Constrain to valid sales-date window
+- Acquisition cohorts  
+- Months-since-first-purchase  
+- Retention counts  
+- Retention percent  
 
-Each table ends with a clean, consistent schema ready for modeling.
+Supports powerful cohort heatmaps.
 
-3️⃣ Dimensional Modeling (Warehouse Layer)
+---
 
-dims_facts.sql builds the star schema:
+### 6️⃣ **Data Quality Validation**  
+`quality_checks.sql` performs:
 
-Dimensions
+- Null key detection  
+- Fact-to-dimension integrity  
+- Orphaned records  
+- Negative revenue checks  
+- Ad spend/date gaps  
+- Duplicate detection  
+- Outlier revenue/spend checks  
 
-dim_date — full calendar table
+Results logged into `quality_check_results`.
 
-dim_customer — customer master info
+---
 
-dim_product — SKU-level product dimension
+## 📊 **Business Intelligence: Power BI Dashboards**
 
-Facts
-
-fct_orders — invoice-level orders
-
-fct_order_items — item-level transactional granularity
-
-All surrogate keys are generated for BI compatibility.
-
-4️⃣ Daily Revenue Aggregation (Data Mart)
-
-aggregates_daily.sql produces mart.agg_daily_revenue, containing:
-
-Revenue
-
-Orders
-
-AOV
-
-Active customers
-
-New vs returning customers
-
-Revenue by country
-
-Date keys for Power BI filtering
-
-This table powers modern BI dashboards efficiently.
-
-5️⃣ Cohort Modeling
-
-cohorts.sql generates:
-
-Monthly acquisition cohorts
-
-Months-since-first-purchase
-
-Retention counts
-
-Retention rates
-
-Perfect for a retention heatmap in Power BI.
-
-6️⃣ Data Quality Checks
-
-quality_checks.sql includes automated tests:
-
-Orphaned fact records
-
-Null keys in dimensions/facts
-
-Negative revenue / invalid quantities
-
-Unexpected date gaps
-
-Ad spend without matching dates
-
-Overlapping or duplicate records
-
-Revenue outlier detection
-
-Results log into a dedicated quality_check_results table to monitor data freshness & validity.
-
-📊 Business Intelligence (Power BI)
-
-The Power BI file contains 4 pages:
-
-Page 1 – Executive Performance Overview
-
-Total revenue, spend, orders, ROAS
-
-Trend lines
-
-ROAS over time
-
-Slicers (date, channel, country)
-
-Page 2 – Channel Performance
-
-Spend by channel
-
-ROAS by channel
-
-Spend over time
-
-Scatter: Spend vs ROAS
-
-Channel contribution to total spend
-
-Page 3 – Product & Customer Insights
-
-Top products by revenue
-
-Revenue by country
-
-Customer mix
-
-AOV trend
-
-Page 4 – Cohort Retention Analysis
-
-Cohort heatmap
-
-Month-over-month retention trends
-
-Customer lifetime behavior insights
-
-🎯 Key Skills Demonstrated
-Business Intelligence / Analytics
-
-ROAS, MER, LTV, AOV
-
-Customer segmentation & retention analysis
-
-Channel performance evaluation
-
-Revenue forecasting foundations
-
-KPI storytelling with dashboards
-
-Data Engineering & Modeling
-
-ETL automation
-
-Clean staging pipelines
-
-Fact/dimensional modeling
-
-Incremental & partition-ready design
-
-Data quality frameworks
-
-Power BI & DAX
-
-Calculated measures
-
-Calendar/date-intelligence
-
-Visual selections, filters, slicers
-
-KPI cards, trends, scatter, matrix visuals
-
-Relationship modeling
-
-🧪 How to Run Locally
-1. Start PostgreSQL + ETL containers
+### **Page 1 — Executive Overview**
+- Revenue, Spend, Orders, ROAS  
+- Daily trends  
+- ROAS timeline  
+- Slicers (date, channel, country)  
+
+### **Page 2 — Channel Performance**
+- Spend by channel  
+- Channel ROAS  
+- Spend-over-time trend  
+- Spend vs ROAS scatter (efficiency matrix)  
+
+### **Page 3 — Product & Customer Insights**
+- Top products  
+- Revenue by country  
+- Customer mix  
+- Time-based revenue patterns  
+
+### **Page 4 — Cohort Analysis**
+- Monthly cohorts  
+- Retention heatmap  
+- Behavioral trends over time  
+
+---
+
+## 🎯 **Skills Demonstrated**
+
+### **Data Engineering**
+- ETL pipeline orchestration  
+- Containerized Postgres environment  
+- SQL cleaning & modeling  
+- Partition-friendly aggregation  
+
+### **Data Analytics**
+- ROAS, MER, AOV, retention  
+- Channel performance optimization  
+- Customer lifecycle insights  
+- Cohort analysis  
+
+### **Power BI**
+- DAX measures  
+- Trend analysis [Revenue vs Spend]  
+- KPI design  
+- Cross-filter relationships  
+- Drilldown slicing  
+
+---
+
+## 🧪 **How to Run Locally**
+
+### **1. Start Docker Containers**
+```bash
 docker compose up -d
-docker compose run --rm etl    # loads raw → builds all tables
+```
 
-2. Connect Power BI
+### **2. Load Raw Data + Build Warehouse**
+```bash
+docker compose run --rm etl
+```
 
-Use:
+### **3. Connect Power BI**
+Use these settings:
 
-Server: localhost:5433
+- **Server:** localhost:5433  
+- **Database:** analytics  
+- **User:** postgres  
+- **Password:** postgres  
+- **Auth:** Database  
 
-Database: analytics
+### **4. Refresh the Power BI report**
 
-Authentication: Database
+---
 
-User: postgres
+## 📦 **Data Sources**
 
-Password: postgres
+- **E-Commerce (UCI Online Retail Dataset)** — cleaned & standardized  
+- **Synthetic Advertising Spend** — generated to enable ROAS, MER, and marketing insights  
 
-3. Refresh visuals
+---
 
-Open the .pbix file → Refresh.
+## 📝 **Future Enhancements**
+- Add Airflow orchestration  
+- Transition SQL models to dbt  
+- Add anomaly detection for revenue/spend  
+- Implement incremental loads  
+- CI/CD for SQL testing (SQLFluff, Great Expectations)  
+- Forecasting models (Prophet, ARIMA)  
 
-📦 Data Sources
-Online Retail Dataset (UCI Machine Learning Repository)
+---
 
-Modified, cleaned, and restructured for this warehouse.
+## 🎉 **Final Notes**
 
-Synthetic Ad Spend Dataset
+This project simulates the *end-to-end* role of a modern Data Analyst or BI Engineer:
 
-Realistic ad spend values generated to support ROAS analysis.
+- Cleaning raw messy data  
+- Designing a warehouse  
+- Building SQL pipelines  
+- Creating analytical metrics  
+- Designing clear dashboards  
+- Communicating business value  
 
-📝 Future Enhancements
-
-Airflow DAG for orchestrated ETL
-
-Incremental backfills with partition logic
-
-dbt refactoring
-
-Real anomaly detection on revenue and spend
-
-Forecasting models (Prophet / ARIMA)
-
-CI/CD for warehouse tests (SQLFluff, Great Expectations)
-
-🎉 Final Notes
-
-This project demonstrates the full workflow of a modern BI/Data Analyst:
-
-Working with raw messy data
-
-Designing a warehouse
-
-Writing high-quality SQL
-
-Implementing automated pipelines
-
-Building insightful dashboards
-
-Communicating business impact
-
-If you're a recruiter or reviewer:
-This project represents real, job-ready business intelligence capability.
+It’s a complete demonstration of real-world analytical and technical skills.
