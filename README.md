@@ -64,29 +64,32 @@ This project answers real company questions:
 .
 ├── data/
 │   ├── raw_sales_data.csv
-│   ├── ad_spend.csv
+│   └── ad_spend.csv
 │
 ├── pipeline/
-│   ├── load_raw.py
-│   ├── backfill.py        # optional
-│   ├── monitor.py         # optional (pipeline health)
+│   └── load_raw.py
 │
 ├── sql/
 │   ├── staging_cleaning.sql
 │   ├── dims_facts.sql
 │   ├── aggregates_daily.sql
 │   ├── cohorts.sql
-│   ├── quality_checks.sql
+│   └── quality_checks.sql
 │
-├── docker/
-│   ├── Dockerfile.etl
-│   ├── Dockerfile.db (optional)
+├── project/
+│   └── Dockerfile
 │
-├── docker-compose.yml
+├── demo/
+│   ├── Performance Dashboard.pbix
+│   └── screenshots/
 │
-└── powerbi/
-    ├── Ecommerce Revenue & Marketing Performance.pbix
-    └── screenshots/
+├── .dockerignore
+├── .gitignore
+├── .docker-compose.yml
+├── LICENSE
+├── README.md
+└── requirements.txt
+
 ```
 
 ---
@@ -96,8 +99,8 @@ This project answers real company questions:
 ### 1️⃣ **Raw Layer**
 Python loads raw CSVs into Postgres:
 
-- `raw_sales` – transaction-level e-commerce data  
-- `raw_ad_spend` – daily spend by marketing channel  
+- `raw_sales_data` – transaction-level e-commerce data  
+- `ad_spend` – daily spend by marketing channel  
 
 This mirrors source systems with no transformations.
 
